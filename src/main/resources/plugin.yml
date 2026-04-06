@@ -1,0 +1,6 @@
+name: KnockKnock
+version: '${version}'
+main: com.minecraftcitiesnetwork.knockknock.KnockKnockPlugin
+api-version: '1.21'
+description: Allows you to knock on doors, trapdoors, and glass.
+author: MinecraftCitiesNetwork, Technofied
