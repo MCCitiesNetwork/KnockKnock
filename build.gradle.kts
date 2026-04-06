@@ -24,7 +24,7 @@ dependencies {
 
 tasks.processResources {
     filteringCharset = "UTF-8"
-    filesMatching(listOf("paper-plugin.yml")) {
+    filesMatching(listOf("plugin.yml")) {
         expand("version" to project.version.toString())
     }
 }

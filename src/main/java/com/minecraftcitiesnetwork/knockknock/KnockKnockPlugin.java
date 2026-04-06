@@ -1,11 +1,15 @@
 package com.minecraftcitiesnetwork.knockknock;
 
+import com.mojang.brigadier.Command;
+import io.papermc.paper.command.brigadier.Commands;
+import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 import java.io.IOException;
+import java.util.List;
 
 public final class KnockKnockPlugin extends JavaPlugin {
 
@@ -18,6 +22,29 @@ public final class KnockKnockPlugin extends JavaPlugin {
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
+        getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, event -> {
+            final Commands registrar = event.registrar();
+            registrar.register(
+                    Commands.literal("knockknock")
+                            .then(Commands.literal("reload")
+                                    .executes(ctx -> {
+                                        var sender = ctx.getSource().getSender();
+                                        if (!sender.hasPermission("knockknock.reload")) {
+                                            sender.sendPlainMessage("You do not have permission to use this command.");
+                                            return 0;
+                                        }
+                                        if (reloadKnockConfig()) {
+                                            sender.sendPlainMessage("KnockKnock config reloaded.");
+                                            return Command.SINGLE_SUCCESS;
+                                        }
+                                        sender.sendPlainMessage("Failed to reload KnockKnock config. Check console logs.");
+                                        return 0;
+                                    }))
+                            .build(),
+                    "KnockKnock commands",
+                    List.of("kk")
+            );
+        });
         getServer().getPluginManager().registerEvents(new KnockListener(this), this);
         getLogger().info("KnockKnock enabled.");
     }

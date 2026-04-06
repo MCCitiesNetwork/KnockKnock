@@ -1,7 +1,6 @@
 name: KnockKnock
 version: '${version}'
 main: com.minecraftcitiesnetwork.knockknock.KnockKnockPlugin
-bootstrapper: com.minecraftcitiesnetwork.knockknock.KnockKnockBootstrap
 api-version: '1.21'
 description: Allows you to knock on doors, trapdoors, and glass.
 author: MinecraftCitiesNetwork, Technofied
