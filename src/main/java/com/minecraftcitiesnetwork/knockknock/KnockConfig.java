@@ -3,150 +3,101 @@ package com.minecraftcitiesnetwork.knockknock;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
-import org.checkerframework.checker.nullness.qual.Nullable;
-import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
-import org.spongepowered.configurate.serialize.SerializationException;
-import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
-
-import java.io.IOException;
-import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.EnumMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+@ConfigSerializable
 public final class KnockConfig {
 
-    private final boolean knockWithTool;
-    private final Map<Material, List<KnockStep>> soundsByMaterial;
-
-    private KnockConfig(
-            boolean knockWithTool,
-            Map<Material, List<KnockStep>> soundsByMaterial
-    ) {
-        this.knockWithTool = knockWithTool;
-        this.soundsByMaterial = soundsByMaterial;
-    }
+    @Setting("settings")
+    public Settings settings = new Settings();
+    @Setting("doors")
+    public Map<String, List<KnockStep>> doors = Map.of();
+    @Setting("trapdoors")
+    public Map<String, List<KnockStep>> trapdoors = Map.of();
+    @Setting("windows")
+    public Map<String, List<KnockStep>> windows = Map.of();
 
     public boolean knockWithTool() {
-        return knockWithTool;
+        return settings.knockWithTool;
     }
 
     public List<KnockStep> resolve(Material type) {
-        return soundsByMaterial.getOrDefault(type, List.of());
+        String materialKey = type.getKey().toString();
+
+        List<KnockStep> fromDoors = doors.get(materialKey);
+        if (fromDoors != null) {
+            return fromDoors;
+        }
+        if (settings.knockOnWindows) {
+            List<KnockStep> fromWindows = windows.get(materialKey);
+            if (fromWindows != null) {
+                return fromWindows;
+            }
+        }
+        if (settings.knockOnTrapdoors) {
+            List<KnockStep> fromTrapdoors = trapdoors.get(materialKey);
+            if (fromTrapdoors != null) {
+                return fromTrapdoors;
+            }
+        }
+        return List.of();
     }
 
-    public static KnockConfig load(Path configPath, Logger log) throws IOException {
-        YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
-                .path(configPath)
-                .build();
-        ConfigurationNode root = loader.load();
-        RawConfig rawConfig;
-        try {
-            rawConfig = root.get(RawConfig.class);
-        } catch (SerializationException e) {
-            throw new IOException("Invalid config.yml structure: " + e.getMessage(), e);
-        }
-        if (rawConfig == null) {
-            throw new IOException("Invalid config.yml structure: file is empty");
-        }
-
-        Map<Material, List<KnockStep>> soundsByMaterial = new EnumMap<>(Material.class);
-        loadSectionInto(rawConfig.doors, "doors", log, soundsByMaterial);
-        if (rawConfig.settings.knockOnTrapdoors) {
-            loadSectionInto(rawConfig.trapdoors, "trapdoors", log, soundsByMaterial);
-        }
-        if (rawConfig.settings.knockOnWindows) {
-            loadSectionInto(rawConfig.windows, "windows", log, soundsByMaterial);
-        }
-
-        return new KnockConfig(rawConfig.settings.knockWithTool, soundsByMaterial);
+    public void sanitize(Logger log) {
+        this.doors = sanitizeSection(this.doors, "doors", log);
+        this.trapdoors = sanitizeSection(this.trapdoors, "trapdoors", log);
+        this.windows = sanitizeSection(this.windows, "windows", log);
     }
 
-    private static void loadSectionInto(
-            Map<String, List<RawSoundStep>> section,
-            String label,
-            Logger log,
-            Map<Material, List<KnockStep>> out
-    ) {
+    private static Map<String, List<KnockStep>> sanitizeSection(Map<String, List<KnockStep>> section, String label, Logger log) {
         if (section == null || section.isEmpty()) {
-            return;
+            return Map.of();
         }
-        for (Map.Entry<String, List<RawSoundStep>> entry : section.entrySet()) {
-            String key = entry.getKey();
-            Material material = parseMaterial(key);
-            if (material == null) {
-                log.warning("Unknown material in " + label + ": " + key);
+        Map<String, List<KnockStep>> sanitized = new LinkedHashMap<>();
+        for (Map.Entry<String, List<KnockStep>> entry : section.entrySet()) {
+            String materialKey = entry.getKey();
+            NamespacedKey parsedMaterialKey = NamespacedKey.fromString(materialKey);
+            if (parsedMaterialKey == null || Registry.MATERIAL.get(parsedMaterialKey) == null) {
+                log.warning("Unknown material in " + label + ": " + materialKey);
                 continue;
             }
-            List<KnockStep> steps = parseSteps(entry.getValue(), key, log);
-            if (!steps.isEmpty()) {
-                out.put(material, List.copyOf(steps));
-            }
-        }
-    }
-
-    private static List<KnockStep> parseSteps(List<RawSoundStep> rawSteps, String materialKey, Logger log) {
-        if (rawSteps == null || rawSteps.isEmpty()) {
-            return List.of();
-        }
-        List<KnockStep> steps = new ArrayList<>();
-        for (RawSoundStep entry : rawSteps) {
-            String soundName = entry.sound;
-            if (soundName == null || soundName.isBlank()) {
-                log.warning("Missing sound for " + materialKey + ", skipping entry.");
+            List<KnockStep> steps = entry.getValue();
+            if (steps == null || steps.isEmpty()) {
                 continue;
             }
-            NamespacedKey soundKey = NamespacedKey.fromString(soundName);
-            if (soundKey == null || Registry.SOUNDS.get(soundKey) == null) {
-                log.warning("Invalid sound '" + soundName + "' for " + materialKey + ", skipping entry.");
-                continue;
+            List<KnockStep> validSteps = new ArrayList<>();
+            for (KnockStep step : steps) {
+                if (step == null || step.sound() == null || step.sound().isBlank()) {
+                    log.warning("Missing sound for " + materialKey + ", skipping entry.");
+                    continue;
+                }
+                NamespacedKey soundKey = NamespacedKey.fromString(step.sound());
+                if (soundKey == null || Registry.SOUNDS.get(soundKey) == null) {
+                    log.warning("Invalid sound '" + step.sound() + "' for " + materialKey + ", skipping entry.");
+                    continue;
+                }
+                validSteps.add(step);
             }
-            steps.add(new KnockStep(soundName, entry.volume, entry.pitch));
+            if (!validSteps.isEmpty()) {
+                sanitized.put(materialKey, List.copyOf(validSteps));
+            }
         }
-        return steps;
-    }
-
-    private static @Nullable Material parseMaterial(String name) {
-        NamespacedKey key = NamespacedKey.fromString(name);
-        if (key == null) {
-            return null;
-        }
-        return Registry.MATERIAL.get(key);
+        return sanitized;
     }
 
     @ConfigSerializable
-    private static final class RawConfig {
-        @Setting("settings")
-        Settings settings = new Settings();
-        @Setting("doors")
-        Map<String, List<RawSoundStep>> doors = Map.of();
-        @Setting("trapdoors")
-        Map<String, List<RawSoundStep>> trapdoors = Map.of();
-        @Setting("windows")
-        Map<String, List<RawSoundStep>> windows = Map.of();
-    }
-
-    @ConfigSerializable
-    private static final class Settings {
+    public static final class Settings {
         @Setting("knock-with-tool")
-        boolean knockWithTool = false;
+        public boolean knockWithTool = false;
         @Setting("knock-on-trapdoors")
-        boolean knockOnTrapdoors = true;
+        public boolean knockOnTrapdoors = true;
         @Setting("knock-on-windows")
-        boolean knockOnWindows = true;
-    }
-
-    @ConfigSerializable
-    private static final class RawSoundStep {
-        @Setting("sound")
-        String sound;
-        @Setting("volume")
-        float volume = 1f;
-        @Setting("pitch")
-        float pitch = 1f;
+        public boolean knockOnWindows = true;
     }
 }
