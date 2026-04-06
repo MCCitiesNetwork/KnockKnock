@@ -3,7 +3,11 @@ package com.minecraftcitiesnetwork.knockknock;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.objectmapping.ConfigSerializable;
+import org.spongepowered.configurate.objectmapping.meta.Setting;
+import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 import java.io.IOException;
@@ -40,35 +44,39 @@ public final class KnockConfig {
                 .path(configPath)
                 .build();
         ConfigurationNode root = loader.load();
-
-        ConfigurationNode settings = root.node("settings");
-        boolean knockWithTool = settings.node("knock-with-tool").getBoolean(false);
-        boolean knockOnTrapdoors = settings.node("knock-on-trapdoors").getBoolean(true);
-        boolean knockOnWindows = settings.node("knock-on-windows").getBoolean(true);
+        RawConfig rawConfig;
+        try {
+            rawConfig = root.get(RawConfig.class);
+        } catch (SerializationException e) {
+            throw new IOException("Invalid config.yml structure: " + e.getMessage(), e);
+        }
+        if (rawConfig == null) {
+            throw new IOException("Invalid config.yml structure: file is empty");
+        }
 
         Map<Material, List<KnockStep>> soundsByMaterial = new EnumMap<>(Material.class);
-        loadSectionInto(root.node("doors"), "doors", log, soundsByMaterial);
-        if (knockOnTrapdoors) {
-            loadSectionInto(root.node("trapdoors"), "trapdoors", log, soundsByMaterial);
+        loadSectionInto(rawConfig.doors, "doors", log, soundsByMaterial);
+        if (rawConfig.settings.knockOnTrapdoors) {
+            loadSectionInto(rawConfig.trapdoors, "trapdoors", log, soundsByMaterial);
         }
-        if (knockOnWindows) {
-            loadSectionInto(root.node("windows"), "windows", log, soundsByMaterial);
+        if (rawConfig.settings.knockOnWindows) {
+            loadSectionInto(rawConfig.windows, "windows", log, soundsByMaterial);
         }
 
-        return new KnockConfig(knockWithTool, soundsByMaterial);
+        return new KnockConfig(rawConfig.settings.knockWithTool, soundsByMaterial);
     }
 
     private static void loadSectionInto(
-            ConfigurationNode section,
+            Map<String, List<RawSoundStep>> section,
             String label,
             Logger log,
             Map<Material, List<KnockStep>> out
     ) {
-        if (section.virtual()) {
+        if (section == null || section.isEmpty()) {
             return;
         }
-        for (Map.Entry<Object, ? extends ConfigurationNode> entry : section.childrenMap().entrySet()) {
-            String key = String.valueOf(entry.getKey());
+        for (Map.Entry<String, List<RawSoundStep>> entry : section.entrySet()) {
+            String key = entry.getKey();
             Material material = parseMaterial(key);
             if (material == null) {
                 log.warning("Unknown material in " + label + ": " + key);
@@ -81,14 +89,13 @@ public final class KnockConfig {
         }
     }
 
-    private static List<KnockStep> parseSteps(ConfigurationNode stepsNode, String materialKey, Logger log) {
-        List<? extends ConfigurationNode> children = stepsNode.childrenList();
-        if (children.isEmpty()) {
+    private static List<KnockStep> parseSteps(List<RawSoundStep> rawSteps, String materialKey, Logger log) {
+        if (rawSteps == null || rawSteps.isEmpty()) {
             return List.of();
         }
         List<KnockStep> steps = new ArrayList<>();
-        for (ConfigurationNode entry : children) {
-            String soundName = entry.node("sound").getString();
+        for (RawSoundStep entry : rawSteps) {
+            String soundName = entry.sound;
             if (soundName == null || soundName.isBlank()) {
                 log.warning("Missing sound for " + materialKey + ", skipping entry.");
                 continue;
@@ -98,18 +105,48 @@ public final class KnockConfig {
                 log.warning("Invalid sound '" + soundName + "' for " + materialKey + ", skipping entry.");
                 continue;
             }
-            float volume = entry.node("volume").getFloat(1f);
-            float pitch = entry.node("pitch").getFloat(1f);
-            steps.add(new KnockStep(soundName, volume, pitch));
+            steps.add(new KnockStep(soundName, entry.volume, entry.pitch));
         }
         return steps;
     }
 
-    private static Material parseMaterial(String name) {
-        try {
-            return Material.valueOf(name);
-        } catch (IllegalArgumentException e) {
+    private static @Nullable Material parseMaterial(String name) {
+        NamespacedKey key = NamespacedKey.fromString(name);
+        if (key == null) {
             return null;
         }
+        return Registry.MATERIAL.get(key);
+    }
+
+    @ConfigSerializable
+    private static final class RawConfig {
+        @Setting("settings")
+        Settings settings = new Settings();
+        @Setting("doors")
+        Map<String, List<RawSoundStep>> doors = Map.of();
+        @Setting("trapdoors")
+        Map<String, List<RawSoundStep>> trapdoors = Map.of();
+        @Setting("windows")
+        Map<String, List<RawSoundStep>> windows = Map.of();
+    }
+
+    @ConfigSerializable
+    private static final class Settings {
+        @Setting("knock-with-tool")
+        boolean knockWithTool = false;
+        @Setting("knock-on-trapdoors")
+        boolean knockOnTrapdoors = true;
+        @Setting("knock-on-windows")
+        boolean knockOnWindows = true;
+    }
+
+    @ConfigSerializable
+    private static final class RawSoundStep {
+        @Setting("sound")
+        String sound;
+        @Setting("volume")
+        float volume = 1f;
+        @Setting("pitch")
+        float pitch = 1f;
     }
 }

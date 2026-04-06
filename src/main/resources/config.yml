@@ -4,111 +4,111 @@ settings:
   knock-on-windows: true
 
 doors:
-  ACACIA_DOOR:
+  minecraft:acacia_door:
     - sound: minecraft:item.shield.block
       volume: 3.0
       pitch: 1.5
-  BAMBOO_DOOR:
+  minecraft:bamboo_door:
     - sound: minecraft:block.bamboo.hit
       volume: 8.0
       pitch: 0.4
-  BIRCH_DOOR:
+  minecraft:birch_door:
     - sound: minecraft:item.shield.block
       volume: 3.0
       pitch: 1.2
-  CHERRY_DOOR:
+  minecraft:cherry_door:
     - sound: minecraft:item.shield.block
       volume: 3.0
       pitch: 1.2
-  COPPER_DOOR:
+  minecraft:copper_door:
     - sound: minecraft:block.lantern.place
       volume: 6.0
       pitch: 0.5
     - sound: minecraft:block.copper.place
       volume: 6.0
       pitch: 0.5
-  CRIMSON_DOOR:
+  minecraft:crimson_door:
     - sound: minecraft:block.fungus.place
       volume: 6.0
       pitch: 0.4
-  DARK_OAK_DOOR:
+  minecraft:dark_oak_door:
     - sound: minecraft:item.shield.block
       volume: 5.0
       pitch: 0.7
-  EXPOSED_COPPER_DOOR:
+  minecraft:exposed_copper_door:
     - sound: minecraft:block.lantern.place
       volume: 6.0
       pitch: 0.5
     - sound: minecraft:block.copper.place
       volume: 6.0
       pitch: 0.5
-  IRON_DOOR:
+  minecraft:iron_door:
     - sound: minecraft:block.lantern.place
       volume: 6.0
       pitch: 0.5
-  JUNGLE_DOOR:
+  minecraft:jungle_door:
     - sound: minecraft:item.shield.block
       volume: 3.0
       pitch: 1.3
-  MANGROVE_DOOR:
+  minecraft:mangrove_door:
     - sound: minecraft:item.shield.block
       volume: 5.0
       pitch: 0.9
-  OAK_DOOR:
+  minecraft:oak_door:
     - sound: minecraft:item.shield.block
       volume: 5.0
       pitch: 1.0
-  OXIDIZED_COPPER_DOOR:
+  minecraft:oxidized_copper_door:
     - sound: minecraft:block.lantern.place
       volume: 6.0
       pitch: 0.5
     - sound: minecraft:block.copper.place
       volume: 6.0
       pitch: 0.5
-  PALE_OAK_DOOR:
+  minecraft:pale_oak_door:
     - sound: minecraft:item.shield.block
       volume: 5.0
       pitch: 1.0
     - sound: minecraft:entity.creaking.sway
       volume: 5.0
       pitch: 1.0
-  SPRUCE_DOOR:
+  minecraft:spruce_door:
     - sound: minecraft:item.shield.block
       volume: 5.0
       pitch: 0.8
-  WARPED_DOOR:
+  minecraft:warped_door:
     - sound: minecraft:block.fungus.place
       volume: 6.0
       pitch: 0.4
-  WAXED_COPPER_DOOR:
+  minecraft:waxed_copper_door:
     - sound: minecraft:block.lantern.place
       volume: 6.0
       pitch: 0.5
     - sound: minecraft:block.copper.place
       volume: 6.0
       pitch: 0.5
-  WAXED_EXPOSED_COPPER_DOOR:
+  minecraft:waxed_exposed_copper_door:
     - sound: minecraft:block.lantern.place
       volume: 6.0
       pitch: 0.5
     - sound: minecraft:block.copper.place
       volume: 6.0
       pitch: 0.5
-  WAXED_OXIDIZED_COPPER_DOOR:
+  minecraft:waxed_oxidized_copper_door:
     - sound: minecraft:block.lantern.place
       volume: 6.0
       pitch: 0.5
     - sound: minecraft:block.copper.place
       volume: 6.0
       pitch: 0.5
-  WAXED_WEATHERED_COPPER_DOOR:
+  minecraft:waxed_weathered_copper_door:
     - sound: minecraft:block.lantern.place
       volume: 6.0
       pitch: 0.5
     - sound: minecraft:block.copper.place
       volume: 6.0
       pitch: 0.5
-  WEATHERED_COPPER_DOOR:
+  minecraft:weathered_copper_door:
     - sound: minecraft:block.lantern.place
       volume: 6.0
       pitch: 0.5
@@ -117,253 +117,253 @@ doors:
       pitch: 0.5
 
 windows:
-  BLACK_STAINED_GLASS:
+  minecraft:black_stained_glass:
     - sound: minecraft:block.bone_block.break
       volume: 10.0
       pitch: 0.5
-  BLUE_STAINED_GLASS:
+  minecraft:blue_stained_glass:
     - sound: minecraft:block.bone_block.break
       volume: 10.0
       pitch: 0.5
-  BROWN_STAINED_GLASS:
+  minecraft:brown_stained_glass:
     - sound: minecraft:block.bone_block.break
       volume: 10.0
       pitch: 0.5
-  CYAN_STAINED_GLASS:
+  minecraft:cyan_stained_glass:
     - sound: minecraft:block.bone_block.break
       volume: 10.0
       pitch: 0.5
-  GLASS:
+  minecraft:glass:
     - sound: minecraft:block.bone_block.break
       volume: 10.0
       pitch: 0.5
-  GRAY_STAINED_GLASS:
+  minecraft:gray_stained_glass:
     - sound: minecraft:block.bone_block.break
       volume: 10.0
       pitch: 0.5
-  GREEN_STAINED_GLASS:
+  minecraft:green_stained_glass:
     - sound: minecraft:block.bone_block.break
       volume: 10.0
       pitch: 0.5
-  LIGHT_BLUE_STAINED_GLASS:
+  minecraft:light_blue_stained_glass:
     - sound: minecraft:block.bone_block.break
       volume: 10.0
       pitch: 0.5
-  LIGHT_GRAY_STAINED_GLASS:
+  minecraft:light_gray_stained_glass:
     - sound: minecraft:block.bone_block.break
       volume: 10.0
       pitch: 0.5
-  LIME_STAINED_GLASS:
+  minecraft:lime_stained_glass:
     - sound: minecraft:block.bone_block.break
       volume: 10.0
       pitch: 0.5
-  MAGENTA_STAINED_GLASS:
+  minecraft:magenta_stained_glass:
     - sound: minecraft:block.bone_block.break
       volume: 10.0
       pitch: 0.5
-  ORANGE_STAINED_GLASS:
+  minecraft:orange_stained_glass:
     - sound: minecraft:block.bone_block.break
       volume: 10.0
       pitch: 0.5
-  PINK_STAINED_GLASS:
+  minecraft:pink_stained_glass:
     - sound: minecraft:block.bone_block.break
       volume: 10.0
       pitch: 0.5
-  PURPLE_STAINED_GLASS:
+  minecraft:purple_stained_glass:
     - sound: minecraft:block.bone_block.break
       volume: 10.0
       pitch: 0.5
-  RED_STAINED_GLASS:
+  minecraft:red_stained_glass:
     - sound: minecraft:block.bone_block.break
       volume: 10.0
       pitch: 0.5
-  TINTED_GLASS:
+  minecraft:tinted_glass:
     - sound: minecraft:block.bone_block.break
       volume: 10.0
       pitch: 0.5
-  WHITE_STAINED_GLASS:
+  minecraft:white_stained_glass:
     - sound: minecraft:block.bone_block.break
       volume: 10.0
       pitch: 0.5
-  YELLOW_STAINED_GLASS:
+  minecraft:yellow_stained_glass:
     - sound: minecraft:block.bone_block.break
       volume: 10.0
       pitch: 0.5
-  BLACK_STAINED_GLASS_PANE:
+  minecraft:black_stained_glass_pane:
     - sound: minecraft:block.copper.break
       volume: 8.0
       pitch: 2.0
-  BLUE_STAINED_GLASS_PANE:
+  minecraft:blue_stained_glass_pane:
     - sound: minecraft:block.copper.break
       volume: 8.0
       pitch: 2.0
-  BROWN_STAINED_GLASS_PANE:
+  minecraft:brown_stained_glass_pane:
     - sound: minecraft:block.copper.break
       volume: 8.0
       pitch: 2.0
-  CYAN_STAINED_GLASS_PANE:
+  minecraft:cyan_stained_glass_pane:
     - sound: minecraft:block.copper.break
       volume: 8.0
       pitch: 2.0
-  GLASS_PANE:
+  minecraft:glass_pane:
     - sound: minecraft:block.copper.break
       volume: 8.0
       pitch: 2.0
-  GRAY_STAINED_GLASS_PANE:
+  minecraft:gray_stained_glass_pane:
     - sound: minecraft:block.copper.break
       volume: 8.0
       pitch: 2.0
-  GREEN_STAINED_GLASS_PANE:
+  minecraft:green_stained_glass_pane:
     - sound: minecraft:block.copper.break
       volume: 8.0
       pitch: 2.0
-  LIGHT_BLUE_STAINED_GLASS_PANE:
+  minecraft:light_blue_stained_glass_pane:
     - sound: minecraft:block.copper.break
       volume: 8.0
       pitch: 2.0
-  LIGHT_GRAY_STAINED_GLASS_PANE:
+  minecraft:light_gray_stained_glass_pane:
     - sound: minecraft:block.copper.break
       volume: 8.0
       pitch: 2.0
-  LIME_STAINED_GLASS_PANE:
+  minecraft:lime_stained_glass_pane:
     - sound: minecraft:block.copper.break
       volume: 8.0
       pitch: 2.0
-  MAGENTA_STAINED_GLASS_PANE:
+  minecraft:magenta_stained_glass_pane:
     - sound: minecraft:block.copper.break
       volume: 8.0
       pitch: 2.0
-  ORANGE_STAINED_GLASS_PANE:
+  minecraft:orange_stained_glass_pane:
     - sound: minecraft:block.copper.break
       volume: 8.0
       pitch: 2.0
-  PINK_STAINED_GLASS_PANE:
+  minecraft:pink_stained_glass_pane:
     - sound: minecraft:block.copper.break
       volume: 8.0
       pitch: 2.0
-  PURPLE_STAINED_GLASS_PANE:
+  minecraft:purple_stained_glass_pane:
     - sound: minecraft:block.copper.break
       volume: 8.0
       pitch: 2.0
-  RED_STAINED_GLASS_PANE:
+  minecraft:red_stained_glass_pane:
     - sound: minecraft:block.copper.break
       volume: 8.0
       pitch: 2.0
-  WHITE_STAINED_GLASS_PANE:
+  minecraft:white_stained_glass_pane:
     - sound: minecraft:block.copper.break
       volume: 8.0
       pitch: 2.0
-  YELLOW_STAINED_GLASS_PANE:
+  minecraft:yellow_stained_glass_pane:
     - sound: minecraft:block.copper.break
       volume: 8.0
       pitch: 2.0
 
 trapdoors:
-  ACACIA_TRAPDOOR:
+  minecraft:acacia_trapdoor:
     - sound: minecraft:item.shield.block
       volume: 3.0
       pitch: 1.5
-  BAMBOO_TRAPDOOR:
+  minecraft:bamboo_trapdoor:
     - sound: minecraft:block.bamboo.hit
       volume: 8.0
       pitch: 0.4
-  BIRCH_TRAPDOOR:
+  minecraft:birch_trapdoor:
     - sound: minecraft:item.shield.block
       volume: 3.0
       pitch: 1.2
-  CHERRY_TRAPDOOR:
+  minecraft:cherry_trapdoor:
     - sound: minecraft:item.shield.block
       volume: 3.0
       pitch: 1.2
-  COPPER_TRAPDOOR:
+  minecraft:copper_trapdoor:
     - sound: minecraft:block.lantern.place
       volume: 6.0
       pitch: 0.7
     - sound: minecraft:block.copper.place
       volume: 6.0
       pitch: 0.7
-  CRIMSON_TRAPDOOR:
+  minecraft:crimson_trapdoor:
     - sound: minecraft:block.fungus.place
       volume: 6.0
       pitch: 0.4
-  DARK_OAK_TRAPDOOR:
+  minecraft:dark_oak_trapdoor:
     - sound: minecraft:item.shield.block
       volume: 5.0
       pitch: 0.7
-  EXPOSED_COPPER_TRAPDOOR:
+  minecraft:exposed_copper_trapdoor:
     - sound: minecraft:block.lantern.place
       volume: 6.0
       pitch: 0.7
     - sound: minecraft:block.copper.place
       volume: 6.0
       pitch: 0.7
-  IRON_TRAPDOOR:
+  minecraft:iron_trapdoor:
     - sound: minecraft:block.lantern.place
       volume: 6.0
       pitch: 0.5
-  JUNGLE_TRAPDOOR:
+  minecraft:jungle_trapdoor:
     - sound: minecraft:item.shield.block
       volume: 3.0
       pitch: 1.3
-  MANGROVE_TRAPDOOR:
+  minecraft:mangrove_trapdoor:
     - sound: minecraft:item.shield.block
       volume: 5.0
       pitch: 0.9
-  OAK_TRAPDOOR:
+  minecraft:oak_trapdoor:
     - sound: minecraft:item.shield.block
       volume: 5.0
       pitch: 1.0
-  OXIDIZED_COPPER_TRAPDOOR:
+  minecraft:oxidized_copper_trapdoor:
     - sound: minecraft:block.lantern.place
       volume: 6.0
       pitch: 0.7
     - sound: minecraft:block.copper.place
       volume: 6.0
       pitch: 0.7
-  PALE_OAK_TRAPDOOR:
+  minecraft:pale_oak_trapdoor:
     - sound: minecraft:item.shield.block
       volume: 5.0
       pitch: 1.0
     - sound: minecraft:entity.creaking.sway
       volume: 5.0
       pitch: 1.0
-  SPRUCE_TRAPDOOR:
+  minecraft:spruce_trapdoor:
     - sound: minecraft:item.shield.block
       volume: 5.0
       pitch: 0.8
-  WARPED_TRAPDOOR:
+  minecraft:warped_trapdoor:
     - sound: minecraft:block.fungus.place
       volume: 6.0
       pitch: 0.4
-  WAXED_COPPER_TRAPDOOR:
+  minecraft:waxed_copper_trapdoor:
     - sound: minecraft:block.lantern.place
       volume: 6.0
       pitch: 0.7
     - sound: minecraft:block.copper.place
       volume: 6.0
       pitch: 0.7
-  WAXED_EXPOSED_COPPER_TRAPDOOR:
+  minecraft:waxed_exposed_copper_trapdoor:
     - sound: minecraft:block.lantern.place
       volume: 6.0
       pitch: 0.7
     - sound: minecraft:block.copper.place
       volume: 6.0
       pitch: 0.7
-  WAXED_OXIDIZED_COPPER_TRAPDOOR:
+  minecraft:waxed_oxidized_copper_trapdoor:
     - sound: minecraft:block.lantern.place
       volume: 6.0
       pitch: 0.7
     - sound: minecraft:block.copper.place
       volume: 6.0
       pitch: 0.7
-  WAXED_WEATHERED_COPPER_TRAPDOOR:
+  minecraft:waxed_weathered_copper_trapdoor:
     - sound: minecraft:block.lantern.place
       volume: 6.0
       pitch: 0.7
     - sound: minecraft:block.copper.place
       volume: 6.0
       pitch: 0.7
-  WEATHERED_COPPER_TRAPDOOR:
+  minecraft:weathered_copper_trapdoor:
     - sound: minecraft:block.lantern.place
       volume: 6.0
       pitch: 0.7
