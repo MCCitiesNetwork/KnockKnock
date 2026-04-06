@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.minecraftcitiesnetwork"
-version = "1.0.0"
+version = "1.1.0"
 
 java {
     toolchain {
@@ -24,7 +24,7 @@ dependencies {
 
 tasks.processResources {
     filteringCharset = "UTF-8"
-    filesMatching("plugin.yml") {
+    filesMatching(listOf("paper-plugin.yml")) {
         expand("version" to project.version.toString())
     }
 }
