@@ -27,12 +27,9 @@ public final class KnockKnockPlugin extends JavaPlugin {
             registrar.register(
                     Commands.literal("knockknock")
                             .then(Commands.literal("reload")
+                                    .requires(ctx -> ctx.getSender().hasPermission("knockknock.reload"))
                                     .executes(ctx -> {
                                         var sender = ctx.getSource().getSender();
-                                        if (!sender.hasPermission("knockknock.reload")) {
-                                            sender.sendPlainMessage("You do not have permission to use this command.");
-                                            return 0;
-                                        }
                                         if (reloadKnockConfig()) {
                                             sender.sendPlainMessage("KnockKnock config reloaded.");
                                             return Command.SINGLE_SUCCESS;
